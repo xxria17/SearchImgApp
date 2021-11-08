@@ -14,5 +14,10 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.dohyun.searchimgapp.view.detail.DetailFragment"
-        android:label="DetailFragment" />
+        android:label="DetailFragment">
+
+        <argument
+            android:name="value"
+            app:argType="com.dohyun.searchimgapp.data.entity.ImageInfo[]" />
+    </fragment>
 </navigation>
