@@ -6,7 +6,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.lang.IllegalStateException
 
 abstract class BaseActivity<B : ViewDataBinding>(
@@ -15,8 +14,6 @@ abstract class BaseActivity<B : ViewDataBinding>(
     private var _binding: B? = null
     protected val binding: B?
         get() = _binding
-
-    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +34,4 @@ abstract class BaseActivity<B : ViewDataBinding>(
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
-    }
 }
