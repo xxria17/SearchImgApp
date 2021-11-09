@@ -21,6 +21,8 @@ abstract class BaseFragment<B: ViewDataBinding>(
     abstract fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?): B
     abstract fun init()
 
+    private var toast : Toast? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,5 +53,10 @@ abstract class BaseFragment<B: ViewDataBinding>(
         _binding = null
     }
 
-    protected fun showToast(msg: String) = Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    protected fun showToast(msg: String) {
+        if (toast == null) {
+            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+        } else toast?.setText(msg)
+        toast?.show()
+    }
 }
