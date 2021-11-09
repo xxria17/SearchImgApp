@@ -1,6 +1,7 @@
 package com.dohyun.searchimgapp.di
 
-import com.dohyun.searchimgapp.data.network.ApiService
+import com.dohyun.searchimgapp.data.network.api.ApiService
+import com.dohyun.searchimgapp.data.network.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +34,7 @@ object ApiModule {
             .client(okHttpClient)
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
     }
 

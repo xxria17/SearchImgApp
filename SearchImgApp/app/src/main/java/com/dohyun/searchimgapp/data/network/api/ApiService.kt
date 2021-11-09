@@ -1,8 +1,9 @@
-package com.dohyun.searchimgapp.data.network
+package com.dohyun.searchimgapp.data.network.api
 
 import com.dohyun.searchimgapp.data.Constant
+import com.dohyun.searchimgapp.data.entity.ErrorResponse
 import com.dohyun.searchimgapp.data.entity.ResponseData
-import retrofit2.Response
+import com.dohyun.searchimgapp.data.network.NetworkResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -15,5 +16,5 @@ interface ApiService {
             @Query("sort") sort: String,
             @Query("page") page: Int,
             @Query("size") size: Int
-    ): Response<ResponseData>
+    ): NetworkResponse<ResponseData, ErrorResponse>
 }
