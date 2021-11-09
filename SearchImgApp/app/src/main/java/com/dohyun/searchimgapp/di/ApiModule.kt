@@ -1,6 +1,6 @@
 package com.dohyun.searchimgapp.di
 
-import com.dohyun.searchimgapp.data.ApiService
+import com.dohyun.searchimgapp.data.network.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
