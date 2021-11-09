@@ -3,13 +3,16 @@ package com.dohyun.searchimgapp.view.search
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.dohyun.searchimgapp.R
 import com.dohyun.searchimgapp.data.entity.ImageInfo
 import com.dohyun.searchimgapp.databinding.FragmentSearchBinding
 import com.dohyun.searchimgapp.view.base.BaseFragment
+import com.dohyun.searchimgapp.view.util.toVisibility
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -17,6 +20,7 @@ import java.util.*
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
     private val viewModel by activityViewModels<SearchViewModel>()
+    private val adapter = ImageAdapter()
 
     override fun onCreateBinding(
         inflater: LayoutInflater,
@@ -28,16 +32,47 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     }
 
     override fun init() {
-        val adapter = ImageAdapter()
-            .apply { onClick = this@SearchFragment::gotoFullScreen }
+
+        adapter.apply { onClick = this@SearchFragment::gotoFullScreen }
         requireDataBinding().resultList.adapter = adapter
 
-        requireDataBinding().searchEdit.addTextChangedListener(textWatcher)
+        requireDataBinding().searchEdit.setOnFocusChangeListener(object : View.OnFocusChangeListener {
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if (hasFocus) {
+                    requireDataBinding().searchEdit.addTextChangedListener(textWatcher)
+                } else {
+                    requireDataBinding().searchEdit.removeTextChangedListener(textWatcher)
+                }
+            }
+        })
 
-        viewModel.result.observe(viewLifecycleOwner){
-            if (it.isSuccessful) {
-                if (it.body()!!.metaData.totalCount == 0) showToast("검색 결과가 없습니다.")
-                else adapter.updateLists(it.body()!!.documents)
+
+        observeData()
+
+        requireDataBinding().resultList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (!requireDataBinding().resultList.canScrollVertically(1)) {
+                    viewModel.next(requireDataBinding().searchEdit.text.toString().trim())
+                }
+            }
+        })
+    }
+
+    private fun observeData() {
+        with(viewModel) {
+            result.observe(viewLifecycleOwner) {
+                if (it == null || it.metaData.totalCount == 0) showToast("검색 결과가 없습니다.")
+                else adapter.updateLists(it.documents)
+            }
+
+            entireProgressVisible.observe(viewLifecycleOwner) { visible ->
+                requireDataBinding().searchEntireProgressBar.visibility = visible.toVisibility()
+            }
+
+            bottomProgressVisible.observe(viewLifecycleOwner) { visible ->
+                requireDataBinding().searchBottomProgressBar.visibility = visible.toVisibility()
             }
         }
     }
@@ -54,7 +89,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                 val timer = Timer()
                 timer.schedule(object : TimerTask() {
                     override fun run() {
-                        viewModel.searchImg(s.toString())
+                        viewModel.searchImg(s.toString().trim())
                     }
                 }, 1000)
             }
