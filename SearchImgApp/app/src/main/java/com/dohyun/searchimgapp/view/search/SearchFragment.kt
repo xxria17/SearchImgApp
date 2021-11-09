@@ -1,5 +1,7 @@
 package com.dohyun.searchimgapp.view.search
 
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -86,17 +88,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        }
-
-        override fun afterTextChanged(s: Editable?) {
             if (s != null && !s.toString().equals("")) {
-                val timer = Timer()
-                timer.schedule(object : TimerTask() {
-                    override fun run() {
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                    run {
                         viewModel.searchImg(s.toString().trim())
                     }
                 }, 1000)
             }
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+
         }
     }
 
