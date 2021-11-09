@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="@+id/detail_toolbar"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back"
-                app:tint="?android:colorPrimary" />
+                app:tint="?android:textColorPrimary" />
 
             <ScrollView
                 android:layout_width="0dp"
