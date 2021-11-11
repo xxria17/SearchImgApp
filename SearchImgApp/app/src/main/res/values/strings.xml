@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">SearchImgApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">이미지 검색 앱</string>
+
+    <!-- Content Description  -->
+    <string name="back_btn">Back Button</string>
+    <string name="full_img">Full Image</string>
+    <string name="search_img">Search Image Button</string>
+    <string name="single_img">Single Image</string>
+
+    <!-- Layout -->
+    <string name="input_text">검색어를 입력해주세요</string>
 </resources>

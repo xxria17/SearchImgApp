@@ -32,7 +32,8 @@
                 app:layout_constraintStart_toStartOf="@+id/detail_toolbar"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back"
-                app:tint="?android:textColorPrimary" />
+                app:tint="?android:textColorPrimary"
+                android:contentDescription="@string/back_btn" />
 
             <ScrollView
                 android:layout_width="0dp"
@@ -53,7 +54,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        tools:srcCompat="@tools:sample/avatars"
+                        android:contentDescription="@string/full_img" />
 
                     <TextView
                         android:id="@+id/sitename_tv"
