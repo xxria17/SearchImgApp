@@ -1,5 +1,6 @@
 package com.dohyun.searchimgapp.view.search
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,13 +39,18 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     inner class ImageViewHolder(view: View?): RecyclerView.ViewHolder(view!!) {
         private val img : ImageView = view!!.findViewById(R.id.item_img)
-
+        private val size = getDeviceSize(view!!.context)
         fun bind(info : ImageInfo) {
             Glide.with(itemView)
                 .load(info.thumbnameUrl)
-                .override(120, 120)
+                .override(size)
                 .centerCrop()
                 .into(img)
         }
+    }
+
+    private fun getDeviceSize(context: Context): Int {
+        val display = context.resources.displayMetrics
+        return (display.widthPixels / 3)
     }
 }
