@@ -1,7 +1,7 @@
 package com.dohyun.searchimgapp.view.search
 
-import android.os.Handler
-import android.os.Looper
+import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -60,6 +60,27 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                 }
             }
         })
+    }
+
+    private var mLayoutManagerSavedState : Parcelable? = null
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("position", requireDataBinding().resultList.layoutManager?.onSaveInstanceState())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null) {
+            mLayoutManagerSavedState = savedInstanceState.getParcelable("position")
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (mLayoutManagerSavedState != null) {
+            requireDataBinding().resultList.layoutManager?.onRestoreInstanceState(mLayoutManagerSavedState)
+        }
     }
 
     private fun observeData() {
