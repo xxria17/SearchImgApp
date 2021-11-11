@@ -20,10 +20,6 @@ class SearchViewModel @Inject constructor(
     val entireProgressVisible : LiveData<Boolean>
         get() = _entireProgressVisible
 
-    private val _bottomProgressVisible = MutableLiveData<Boolean>()
-    val bottomProgressVisible : LiveData<Boolean>
-        get() = _bottomProgressVisible
-
     private val _result = MutableLiveData<ResponseData>()
     val result : LiveData<ResponseData>
         get() = _result
@@ -63,7 +59,7 @@ class SearchViewModel @Inject constructor(
 
     fun next(query: String) {
         if (!isEnd) {
-            _bottomProgressVisible.postValue(true)
+            _entireProgressVisible.postValue(true)
             val currentList = _result.value
             viewModelScope.launch {
                 count++
@@ -88,7 +84,7 @@ class SearchViewModel @Inject constructor(
                         _msg.postValue(errorHandle("UnknownError"))
                     }
                 }
-                _bottomProgressVisible.postValue(false)
+                _entireProgressVisible.postValue(false)
             }
         }
     }

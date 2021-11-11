@@ -73,10 +73,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                 requireDataBinding().searchEntireProgressBar.visibility = visible.toVisibility()
             }
 
-            bottomProgressVisible.observe(viewLifecycleOwner) { visible ->
-                requireDataBinding().searchBottomProgressBar.visibility = visible.toVisibility()
-            }
-
             errorMsg.observe(viewLifecycleOwner) {
                 showToast(it)
             }
