@@ -52,11 +52,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         observeData()
 
         requireDataBinding().resultList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (!requireDataBinding().resultList.canScrollVertically(1)) {
-                    viewModel.next(requireDataBinding().searchEdit.text.toString().trim())
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!viewModel.entireProgressVisible.value!!) {
+                    if (!requireDataBinding().resultList.canScrollVertically(1)) {
+                        viewModel.next(requireDataBinding().searchEdit.text.toString().trim())
+                    }
                 }
             }
         })
@@ -101,22 +102,23 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     }
 
     private val textWatcher = object : TextWatcher {
+        var timer = Timer()
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (s != null && !s.toString().equals("")) {
-                val handler = Handler(Looper.getMainLooper())
-                handler.postDelayed({
-                    run {
-                        viewModel.searchImg(s.toString().trim())
-                    }
-                }, 1000)
-            }
         }
 
         override fun afterTextChanged(s: Editable?) {
-
+            timer.cancel()
+            timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    if(s != null && !s.toString().equals("")) {
+                        viewModel.searchImg(s.toString().trim())
+                    }
+                }
+            }, 1000L)
         }
     }
 
