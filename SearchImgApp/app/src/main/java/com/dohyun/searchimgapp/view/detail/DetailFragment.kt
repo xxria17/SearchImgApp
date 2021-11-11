@@ -39,6 +39,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(R.layout.fragment_det
 
         Glide.with(requireContext())
                 .load(item.imageUrl)
+                .placeholder(R.drawable.photo)
                 .into(requireDataBinding().detailImg)
 
         requireDataBinding().datetimeTv.text = convertDate(item.datetime)
