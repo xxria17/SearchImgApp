@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.dohyun.searchimgapp.R
 import com.dohyun.searchimgapp.databinding.FragmentDetailBinding
 import com.dohyun.searchimgapp.view.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -39,7 +39,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(R.layout.fragment_det
 
         Glide.with(requireContext())
                 .load(item.imageUrl)
-                .placeholder(R.drawable.photo)
+                .error(R.drawable.photo)
+                .fallback(R.drawable.photo)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(requireDataBinding().detailImg)
 
         requireDataBinding().datetimeTv.text = convertDate(item.datetime)
