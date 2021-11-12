@@ -36,6 +36,7 @@
                 android:contentDescription="@string/back_btn" />
 
             <ScrollView
+                android:id="@+id/scrollView2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -54,29 +55,29 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"
-                        tools:srcCompat="@tools:sample/avatars"
-                        android:contentDescription="@string/full_img" />
+                        android:contentDescription="@string/full_img"
+                        tools:srcCompat="@tools:sample/avatars" />
 
                     <TextView
                         android:id="@+id/sitename_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center"
                         android:layout_margin="10dp"
-                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text=""
                         android:textColor="?android:textColorPrimary"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/datetime_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center"
                         android:layout_marginStart="10dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:text=""
                         android:textColor="?android:textColorPrimary"
                         android:textSize="17sp" />
                 </LinearLayout>
