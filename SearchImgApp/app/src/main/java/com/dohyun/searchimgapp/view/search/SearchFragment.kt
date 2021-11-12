@@ -24,6 +24,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private val viewModel by activityViewModels<SearchViewModel>()
     private val adapter = ImageAdapter()
 
+    private var mLayoutManagerSavedState : Parcelable? = null
+
     override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -63,11 +65,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         })
     }
 
-    private var mLayoutManagerSavedState : Parcelable? = null
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable("position", requireDataBinding().resultList.layoutManager?.onSaveInstanceState())
+        outState.putParcelable("position", requireDataBinding().resultList.layoutManager!!.onSaveInstanceState())
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -80,7 +80,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     override fun onStart() {
         super.onStart()
         if (mLayoutManagerSavedState != null) {
-            requireDataBinding().resultList.layoutManager?.onRestoreInstanceState(mLayoutManagerSavedState)
+            println("SearchFragment mLayoutManagerSavedState is not null!")
+            requireDataBinding().resultList.layoutManager!!.onRestoreInstanceState(mLayoutManagerSavedState)
         }
     }
 
