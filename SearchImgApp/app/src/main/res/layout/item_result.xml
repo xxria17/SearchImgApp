@@ -12,5 +12,8 @@
         android:layout_height="wrap_content"
         tools:srcCompat="@tools:sample/avatars"
         android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:contentDescription="@string/single_img" />
 </LinearLayout>
